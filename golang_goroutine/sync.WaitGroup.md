@@ -12,4 +12,4 @@
     
 2. 当调用 `WaitGroup.Wait()` 时，`waiter` 计数会增加，表示有一个 goroutine 正在等待 `counter` 降为零。然后，调用 `runtime_Semacquire(semap)` 会尝试获取信号量，如果 `counter` 仍然不为零，当前 goroutine 就会被挂起。这意味着这个 goroutine 将被阻塞，直到 `counter` 降为零。
     
-3. 当调用 `WaitGroup.Done()` 时，`counter` 会减少，表示有一个任务完成了。如果 `counter` 减少后为零，说明所有任务都已完成。此时，调用 `runtime_Semrelease` 会释放信号量，唤醒正在等待的 goroutine。被唤醒的 goroutine 将继续执行，完成整个等待过程。
+3. 当调用 `WaitGroup.Done()` 时，`counter` 会减少，表示有一个任务完成了。如果 `counter` 减少后为零，说明所有任务都已完成。此时，调用 `runtime_Semrelease` 会释放信号量，唤醒正在等待的 goroutine。被唤醒的 goroutine 将继续执行，完成整个等待过程
